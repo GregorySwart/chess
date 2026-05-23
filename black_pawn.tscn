@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://qsl7ccw4q6qr"]
+
+[ext_resource type="Texture2D" uid="uid://8hoxyt1warvw" path="res://assets/chess_atlas_v1.png" id="1_d72p2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tqba"]
+size = Vector2(64, 64)
+
+[node name="Black Pawn" type="RigidBody2D" unique_id=478204146]
+gravity_scale = 0.0
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1301870539]
+texture = ExtResource("1_d72p2")
+region_enabled = true
+region_rect = Rect2(192, 0, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1065275686]
+shape = SubResource("RectangleShape2D_2tqba")
