@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://wmym1y6d12fb"]
+
+[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_2tqba"]
+[ext_resource type="Script" uid="uid://dukc0hy5r2bf5" path="res://piece.gd" id="1_dk1jb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tqba"]
+size = Vector2(64, 64)
+
+[node name="Piece" type="RigidBody2D" unique_id=478204146]
+input_pickable = true
+gravity_scale = 0.0
+script = ExtResource("1_dk1jb")
+
+[node name="Selection Box" type="Sprite2D" parent="." unique_id=731265595]
+texture = ExtResource("1_2tqba")
+region_enabled = true
+region_rect = Rect2(64, 64, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1065275686]
+shape = SubResource("RectangleShape2D_2tqba")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

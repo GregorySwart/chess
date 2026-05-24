@@ -2,10 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://8hoxyt1warvw" path="res://assets/chess_atlas_v1.png" id="1_psm7c"]
 [ext_resource type="Script" uid="uid://d4gispwu4b4y6" path="res://board.gd" id="2_8l818"]
-[ext_resource type="PackedScene" uid="uid://wmym1y6d12fb" path="res://white_pawn.tscn" id="3_8l818"]
-[ext_resource type="PackedScene" uid="uid://qsl7ccw4q6qr" path="res://black_pawn.tscn" id="4_jqgjh"]
-[ext_resource type="PackedScene" uid="uid://c8a3boonm4cq0" path="res://white_rook.tscn" id="5_mgc1s"]
-[ext_resource type="PackedScene" uid="uid://dbbip4t7ok23f" path="res://black_rook.tscn" id="6_rq8yp"]
+[ext_resource type="PackedScene" uid="uid://ouwg8nxju72j" path="res://white_pawn.tscn" id="3_8l818"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqaso"]
 texture = ExtResource("1_psm7c")
@@ -29,15 +26,14 @@ rendering_quadrant_size = 1
 physics_quadrant_size = 1
 script = ExtResource("2_8l818")
 white_pawn_scene = ExtResource("3_8l818")
-black_pawn_scene = ExtResource("4_jqgjh")
-white_rook_scene = ExtResource("5_mgc1s")
-black_rook_scene = ExtResource("6_rq8yp")
 
 [node name="Board Area" type="Area2D" parent="." unique_id=1494012677]
-visible = false
 
 [node name="Board Collision" type="CollisionShape2D" parent="Board Area" unique_id=141827356]
 position = Vector2(256, 256)
 shape = SubResource("RectangleShape2D_0ugm7")
 
 [node name="Board Sprite" type="Sprite2D" parent="Board Area" unique_id=257133868]
+
+[connection signal="input_event" from="Board Area" to="." method="_on_board_area_input_event"]
+[connection signal="mouse_entered" from="Board Area" to="." method="_on_board_area_mouse_entered"]
