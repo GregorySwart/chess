@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://wmym1y6d12fb"]
 
-[ext_resource type="Texture2D" uid="uid://8hoxyt1warvw" path="res://assets/chess_atlas_v1.png" id="1_2tqba"]
+[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_2tqba"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2tqba"]
 size = Vector2(58, 61)

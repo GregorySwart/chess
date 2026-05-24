@@ -4,6 +4,8 @@
 [ext_resource type="Script" uid="uid://d4gispwu4b4y6" path="res://board.gd" id="2_8l818"]
 [ext_resource type="PackedScene" uid="uid://wmym1y6d12fb" path="res://white_pawn.tscn" id="3_8l818"]
 [ext_resource type="PackedScene" uid="uid://qsl7ccw4q6qr" path="res://black_pawn.tscn" id="4_jqgjh"]
+[ext_resource type="PackedScene" uid="uid://c8a3boonm4cq0" path="res://white_rook.tscn" id="5_mgc1s"]
+[ext_resource type="PackedScene" uid="uid://dbbip4t7ok23f" path="res://black_rook.tscn" id="6_rq8yp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqaso"]
 texture = ExtResource("1_psm7c")
@@ -28,6 +30,8 @@ physics_quadrant_size = 1
 script = ExtResource("2_8l818")
 white_pawn_scene = ExtResource("3_8l818")
 black_pawn_scene = ExtResource("4_jqgjh")
+white_rook_scene = ExtResource("5_mgc1s")
+black_rook_scene = ExtResource("6_rq8yp")
 
 [node name="Board Area" type="Area2D" parent="." unique_id=1494012677]
 visible = false
@@ -37,10 +41,3 @@ position = Vector2(256, 256)
 shape = SubResource("RectangleShape2D_0ugm7")
 
 [node name="Board Sprite" type="Sprite2D" parent="Board Area" unique_id=257133868]
-
-[node name="White Pawn Old" type="Sprite2D" parent="." unique_id=648735520]
-visible = false
-position = Vector2(32, 416)
-texture = ExtResource("1_psm7c")
-region_enabled = true
-region_rect = Rect2(128, 0, 64, 64)

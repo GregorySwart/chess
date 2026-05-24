@@ -3,6 +3,8 @@ extends TileMapLayer
 
 const white_pawn_squares = ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"]
 const black_pawn_squares = ["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"]
+const white_rook_squares = ["a1", "h1"]
+const black_rook_squares = ["a8", "h8"]
 
 
 const TILE_SIZE = 64
@@ -10,6 +12,8 @@ const TILE_SIZE = 64
 
 @export var white_pawn_scene: PackedScene
 @export var black_pawn_scene: PackedScene
+@export var white_rook_scene: PackedScene
+@export var black_rook_scene: PackedScene
 
 
 # Called when the node enters the scene tree for the first time.
@@ -25,6 +29,19 @@ func _ready() -> void:
 		var white_pawn = black_pawn_scene.instantiate()
 		white_pawn.position = to_coords(square)
 		add_child(white_pawn)
+		
+	for square in white_rook_squares:
+		print("Creating white rook at " + square + ": " + str(to_coords(square)))
+		var white_rook = white_rook_scene.instantiate()
+		white_rook.position = to_coords(square)
+		add_child(white_rook)
+		
+	for square in black_rook_squares:
+		print("Creating black rook at " + square + ": " + str(to_coords(square)))
+		var white_rook = black_rook_scene.instantiate()
+		white_rook.position = to_coords(square)
+		add_child(white_rook)
+		
 	pass # Replace with function body.
 
 

@@ -1,18 +1,18 @@
-[gd_scene format=3 uid="uid://qsl7ccw4q6qr"]
+[gd_scene format=3 uid="uid://dbbip4t7ok23f"]
 
-[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_d72p2"]
+[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_m02fp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2tqba"]
-size = Vector2(64, 64)
+size = Vector2(58, 61)
 
-[node name="Black Pawn" type="RigidBody2D" unique_id=478204146]
+[node name="Black Rook" type="RigidBody2D" unique_id=478204146]
 gravity_scale = 0.0
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1301870539]
-texture = ExtResource("1_d72p2")
+texture = ExtResource("1_m02fp")
 region_enabled = true
-region_rect = Rect2(192, 0, 64, 64)
+region_rect = Rect2(192, 64, 64, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1065275686]
 shape = SubResource("RectangleShape2D_2tqba")
