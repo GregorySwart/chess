@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	super(delta)
 
 
-func get_moves():
+func get_moves() -> Array[String]:
 	var potential_moves: Array[String] = []
 	
 	var current_square: Vector2i = Utils.alg_to_board_coords(square_alg)

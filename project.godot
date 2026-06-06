@@ -16,6 +16,7 @@ config/icon="res://assets/icon.svg"
 
 [debug]
 
+gdscript/warnings/untyped_declaration=1
 gdscript/warnings/integer_division=0
 
 [input]

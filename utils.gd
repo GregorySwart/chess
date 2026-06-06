@@ -19,8 +19,8 @@ static func to_alg(coordinates: Vector2) -> String:
 	const file_dict = {0: "a", 1: "b", 2: "c", 3: "d", 4: "e", 5: "f", 6: "g", 7: "h"}
 	const rank_dict = {7: "1", 6: "2", 5: "3", 4: "4", 3: "5", 2: "6", 1: "7", 0: "8"}
 	
-	var file = file_dict[int(floor(coordinates.x)) / TILE_SIZE]
-	var rank = rank_dict[int(floor(coordinates.y)) / TILE_SIZE]
+	var file: String = file_dict[int(floor(coordinates.x)) / TILE_SIZE]
+	var rank: String = rank_dict[int(floor(coordinates.y)) / TILE_SIZE]
 	
 	return file + rank
 
@@ -69,6 +69,6 @@ static func board_coords_to_alg(board_coords: Vector2i) -> String:
 	""" Convert 'board coordinates' to algebraic notation e.g. (1, 1) -> "a1", (2, 3) -> "b3" etc. """
 	const file_dict = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"}
 	const rank_dict = {1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8"}
-	var file = file_dict[int(board_coords.x)]
-	var rank = rank_dict[int(board_coords.y)]
+	var file: String = file_dict[int(board_coords.x)]
+	var rank: String = rank_dict[int(board_coords.y)]
 	return file + rank
