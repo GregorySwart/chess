@@ -58,6 +58,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_pressed("s"):
 		if selected_piece:
 			print("Selected piece: %s (%s)" % [selected_piece.type, selected_piece])
+			print("Potential moves: %s" % str(selected_piece.get_moves()))
 		else:
 			print("No piece selected")
 		print("Number of pieces on board: %s" % str(len(pieces_on_board)))
@@ -66,8 +67,6 @@ func _process(_delta: float) -> void:
 		for k in board_dict:
 			var v = board_dict[k]
 			print("%s: %s (%s)" % [k , v.type, v])
-		#print("Board dictionary: %s" % str({k for k in board_dict}))
-
 
 func fetch_piece_at_square(alg: String) :
 	return board_dict.get(alg)

@@ -11,13 +11,13 @@ input_pickable = true
 gravity_scale = 0.0
 script = ExtResource("1_dk1jb")
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1065275686]
+shape = SubResource("RectangleShape2D_2tqba")
+
 [node name="Selection Box" type="Sprite2D" parent="." unique_id=731265595]
 texture = ExtResource("1_2tqba")
 region_enabled = true
 region_rect = Rect2(64, 64, 64, 64)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1065275686]
-shape = SubResource("RectangleShape2D_2tqba")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

@@ -49,3 +49,26 @@ static func to_coords(alg: String) -> Vector2:
 	var rank_coord: int = rank_dict[rank] * TILE_SIZE + TILE_SIZE/2
 	
 	return Vector2(file_coord, rank_coord)
+
+
+static func alg_to_board_coords(alg: String) -> Vector2i:
+	""" Convert algebraic notation to 'board coordinates' e.g. "a1" -> (1, 1), "b3" -> (2, 3) etc. """
+	const file_dict = {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6, "g": 7, "h": 8}
+	const rank_dict = {"1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8}
+	assert(
+		len(alg) == 2 and alg[0] in "abcdefgh" and alg[1] in "12345678",
+		"Invalid algebraic notation! - Notation must be a String of length 2 comprised of a letter [a-h] and a number \
+		[1-8] e.g. 'd6'"
+	)
+	var file: int = int(file_dict[alg[0]])
+	var rank: int = int(rank_dict[alg[1]])
+	return Vector2(file, rank)
+
+
+static func board_coords_to_alg(board_coords: Vector2i) -> String:
+	""" Convert 'board coordinates' to algebraic notation e.g. (1, 1) -> "a1", (2, 3) -> "b3" etc. """
+	const file_dict = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"}
+	const rank_dict = {1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8"}
+	var file = file_dict[int(board_coords.x)]
+	var rank = rank_dict[int(board_coords.y)]
+	return file + rank
