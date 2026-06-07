@@ -2,22 +2,42 @@ extends TileMapLayer
 
 const white_pawn_squares = ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"]
 const black_pawn_squares = ["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"]
+const white_knight_squares = ["b1", "g1"]
+const black_knight_squares = ["b8", "g8"]
+const white_bishop_squares = ["c1", "f1"]
+const black_bishop_squares = ["c8", "f8"]
 const white_rook_squares = ["a1", "h1"]
 const black_rook_squares = ["a8", "h8"]
+const white_queen_squares = ["d1"]
+const black_queen_squares = ["d8"]
+const white_king_squares = ["e1"]
+const black_king_squares = ["e8"]
 
 const TILE_SIZE = 64
 
 @export var move_indicator_scene: PackedScene
 @export var white_pawn_scene: PackedScene
-#@export var black_pawn_scene: PackedScene
-#@export var white_rook_scene: PackedScene
-#@export var black_rook_scene: PackedScene
+@export var black_pawn_scene: PackedScene
+@export var white_knight_scene: PackedScene
+@export var black_knight_scene: PackedScene
+@export var white_bishop_scene: PackedScene
+@export var black_bishop_scene: PackedScene
+@export var white_rook_scene: PackedScene
+@export var black_rook_scene: PackedScene
+@export var white_queen_scene: PackedScene
+@export var black_queen_scene: PackedScene
+@export var white_king_scene: PackedScene
+@export var black_king_scene: PackedScene
+
 # Keep track of all pieces in a dict to ensure only one piece sits on a square
 @export var board_dict: Dictionary[String, Node] = {}
-@export var move_indicators: Array[Node] = []
+@export var move_indicators: Array[Node] = []  # NOTE Move indicators are bugged - disabled for now
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# TODO FIgure out a way to factor this out into a util fn - can Utils import the piece scenes?
+	# Can I just declare the piece scenes as export vars in Utils too?
+	
 	for square: String in white_pawn_squares:
 		print("Creating white pawn at %s %s" % [square, str(Utils.to_coords(square))])
 		var white_pawn: Node = white_pawn_scene.instantiate()
@@ -26,30 +46,93 @@ func _ready() -> void:
 		board_dict[square] = white_pawn
 		add_child(white_pawn)
 
-	# Comment out populating the rest of the board until scene and script hierarchy has been redone
 	for square: String in black_pawn_squares:
-		#print("Creating black pawn at " + square + ": " + str(Utils.to_coords(square)))
-		#var black_pawn = black_pawn_scene.instantiate()
-		#black_pawn.position = Utils.to_coords(square)
-		#black_pawn.square_alg = square
-		#add_child(black_pawn)
-		pass
+		print("Creating black pawn at %s %s" % [square, str(Utils.to_coords(square))])
+		var black_pawn: Node = black_pawn_scene.instantiate()
+		black_pawn.position = Utils.to_coords(square)
+		black_pawn.square_alg = square
+		board_dict[square] = black_pawn
+		add_child(black_pawn)
+		
+	for square: String in white_knight_squares:
+		print("Creating white knight at %s %s" % [square, str(Utils.to_coords(square))])
+		var white_knight: Node = white_knight_scene.instantiate()
+		white_knight.position = Utils.to_coords(square)
+		white_knight.square_alg = square
+		board_dict[square] = white_knight
+		add_child(white_knight)
+
+	for square: String in black_knight_squares:
+		print("Creating black knight at %s %s" % [square, str(Utils.to_coords(square))])
+		var black_knight: Node = black_knight_scene.instantiate()
+		black_knight.position = Utils.to_coords(square)
+		black_knight.square_alg = square
+		board_dict[square] = black_knight
+		add_child(black_knight)
+		
+	for square: String in white_bishop_squares:
+		print("Creating white bishop at %s %s" % [square, str(Utils.to_coords(square))])
+		var white_bishop: Node = white_bishop_scene.instantiate()
+		white_bishop.position = Utils.to_coords(square)
+		white_bishop.square_alg = square
+		board_dict[square] = white_bishop
+		add_child(white_bishop)
+
+	for square: String in black_bishop_squares:
+		print("Creating black bishop at %s %s" % [square, str(Utils.to_coords(square))])
+		var black_bishop: Node = black_bishop_scene.instantiate()
+		black_bishop.position = Utils.to_coords(square)
+		black_bishop.square_alg = square
+		board_dict[square] = black_bishop
+		add_child(black_bishop)
 		
 	for square: String in white_rook_squares:
-		#print("Creating white rook at " + square + ": " + str(Utils.to_coords(square)))
-		#var white_rook = white_rook_scene.instantiate()
-		#white_rook.position = Utils.to_coords(square)
-		#white_rook.square_alg = square
-		#add_child(white_rook)
-		pass
-		
+		print("Creating white rook at %s %s" % [square, str(Utils.to_coords(square))])
+		var white_rook: Node = white_rook_scene.instantiate()
+		white_rook.position = Utils.to_coords(square)
+		white_rook.square_alg = square
+		board_dict[square] = white_rook
+		add_child(white_rook)
+
 	for square: String in black_rook_squares:
-		#print("Creating black rook at " + square + ": " + str(Utils.to_coords(square)))
-		#var black_rook = black_rook_scene.instantiate()
-		#black_rook.position = Utils.to_coords(square)
-		#black_rook.square_alg = square
-		#add_child(black_rook)
-		pass
+		print("Creating black rook at %s %s" % [square, str(Utils.to_coords(square))])
+		var black_rook: Node = black_rook_scene.instantiate()
+		black_rook.position = Utils.to_coords(square)
+		black_rook.square_alg = square
+		board_dict[square] = black_rook
+		add_child(black_rook)
+		
+	for square: String in white_queen_squares:
+		print("Creating white queen at %s %s" % [square, str(Utils.to_coords(square))])
+		var white_queen: Node = white_queen_scene.instantiate()
+		white_queen.position = Utils.to_coords(square)
+		white_queen.square_alg = square
+		board_dict[square] = white_queen
+		add_child(white_queen)
+
+	for square: String in black_queen_squares:
+		print("Creating black queen at %s %s" % [square, str(Utils.to_coords(square))])
+		var black_queen: Node = black_queen_scene.instantiate()
+		black_queen.position = Utils.to_coords(square)
+		black_queen.square_alg = square
+		board_dict[square] = black_queen
+		add_child(black_queen)
+		
+	for square: String in white_king_squares:
+		print("Creating white king at %s %s" % [square, str(Utils.to_coords(square))])
+		var white_king: Node = white_king_scene.instantiate()
+		white_king.position = Utils.to_coords(square)
+		white_king.square_alg = square
+		board_dict[square] = white_king
+		add_child(white_king)
+
+	for square: String in black_king_squares:
+		print("Creating black king at %s %s" % [square, str(Utils.to_coords(square))])
+		var black_king: Node = black_king_scene.instantiate()
+		black_king.position = Utils.to_coords(square)
+		black_king.square_alg = square
+		board_dict[square] = black_king
+		add_child(black_king)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

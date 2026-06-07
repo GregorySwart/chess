@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c1ekp4xapmypu"]
+
+[ext_resource type="Script" uid="uid://djj8iotvdeoqr" path="res://black_knight.gd" id="1_aot8i"]
+[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="2_t1nd4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f14ny"]
+size = Vector2(64, 64)
+
+[node name="Black Knight" type="RigidBody2D" unique_id=67238183]
+gravity_scale = 0.0
+script = ExtResource("1_aot8i")
+metadata/_edit_group_ = true
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1392774489]
+texture = ExtResource("2_t1nd4")
+region_enabled = true
+region_rect = Rect2(192, 192, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1142154014]
+shape = SubResource("RectangleShape2D_f14ny")
+
+[node name="Selection Box" type="Sprite2D" parent="." unique_id=1877000206]
+texture = ExtResource("2_t1nd4")
+region_enabled = true
+region_rect = Rect2(64, 64, 64, 64)

@@ -5,12 +5,12 @@ class_name WhitePawn
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	type = "White Pawn"
+	colour = "white"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super(delta)
-	#print(position)
 
 func get_moves() -> Array[String]:
 	var potential_moves: Array[String] = []
