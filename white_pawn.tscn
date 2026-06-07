@@ -9,6 +9,7 @@ size = Vector2(64, 64)
 [node name="White Pawn" type="RigidBody2D" unique_id=67238183]
 gravity_scale = 0.0
 script = ExtResource("1_dk1jb")
+metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1392774489]
 texture = ExtResource("1_2tqba")

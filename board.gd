@@ -7,13 +7,14 @@ const black_rook_squares = ["a8", "h8"]
 
 const TILE_SIZE = 64
 
+@export var move_indicator_scene: PackedScene
 @export var white_pawn_scene: PackedScene
 #@export var black_pawn_scene: PackedScene
 #@export var white_rook_scene: PackedScene
 #@export var black_rook_scene: PackedScene
-@export var selected_piece: Node
 # Keep track of all pieces in a dict to ensure only one piece sits on a square
 @export var board_dict: Dictionary[String, Node] = {}
+@export var move_indicators: Array[Node] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -55,10 +56,13 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# Some print statements for debugging
 	if Input.is_action_pressed("s"):
-		var currently_selected_piece: Node = get_selected_piece()
+		var currently_selected_piece: Piece = get_selected_piece()
 		if currently_selected_piece:
-			print("Selected piece: %s (%s)" % [selected_piece.type, selected_piece])
-			print("Potential moves: %s" % str(selected_piece.get_moves()))
+			print("Selected piece: %s (%s)" % [currently_selected_piece.type, currently_selected_piece])
+			print("Piece.square_alg: %s" % currently_selected_piece.square_alg)
+			print("Piece.position: %s" % currently_selected_piece.position)
+			print("Potential moves: %s" % str(currently_selected_piece.get_moves()))
+			
 		else:
 			print("No piece selected")
 		print("Number of pieces on board: %s" % str(len(board_dict)))
@@ -86,14 +90,24 @@ func get_selected_piece() -> Node:
 	print("No selected pieces found on the board - checked %s" % str(board_dict.keys()))
 	return null
 
+func remove_move_indicators() -> void:
+	print("Removing all move indicators...")
+	for move_indicator in move_indicators:
+		print("Removing move indicator at %s" % move_indicator.square_alg)
+		move_indicator.queue_free()
+	move_indicators = []
+
 func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	""" Board is clicked """
 	if event.is_action_pressed("left_click"):
+		remove_move_indicators()
+		
 		var alg: String = Utils.to_alg(event.position)  # Clicked square (algebraic notation)
 		print("Clicked board at %s which is identified as %s" % [event.position, alg])
 		var previously_selected_piece: Node = get_selected_piece()
 		var clicked_piece: Node = fetch_piece_at_square(alg)
 		
-		var previously_selected_piece_pos: String = previously_selected_piece.square_alg if previously_selected_piece else "<MISSING>"
+		var previously_selected_piece_pos: String = previously_selected_piece.square_alg if previously_selected_piece else "<NONE>"
 		var clicked_piece_pos: String = clicked_piece.square_alg if clicked_piece else "<NONE>"
 		print("Previously selected piece: %s - clicked piece: %s" % [previously_selected_piece_pos, clicked_piece_pos])
 		
@@ -103,23 +117,38 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			pass
 			
 		elif not clicked_piece and previously_selected_piece:
-			# TODO add logic here to check if the previously selected piece can move to the clicked square
+			var potential_moves: Array[String] = previously_selected_piece.get_moves()
+			if alg in potential_moves:
+				var start_position: String = previously_selected_piece.square_alg
+				previously_selected_piece.position = Utils.to_coords(alg)
+				previously_selected_piece.square_alg = alg
+				board_dict.erase(start_position)
+				board_dict[alg] = previously_selected_piece
 			previously_selected_piece.is_selected = false
 		
 		elif clicked_piece and not previously_selected_piece:
 			clicked_piece.is_selected = true
+			
+			# TODO Render move indicators onto all squares the piece can move
+			var potential_moves: Array[String] = clicked_piece.get_moves()
+			for potential_move in potential_moves:
+				# TODO Fix the below move indicator logic - bugs out for some reason
+				
+				# BUG When move indicators are rendered other pieces are rendered at their starting position, while
+				# retaining their correct `piece.position`
+				
+				#print("Rendering move indicator at %s %s" % [potential_move, str(Utils.to_coords(potential_move))])
+				#var move_indicator: Node = move_indicator_scene.instantiate()
+				#move_indicator.position = Utils.to_coords(potential_move)
+				#move_indicator.square_alg = potential_move
+				#add_child(move_indicator)
+				#move_indicators.append(move_indicator)
+				pass
 		
-		else:
+		else:  # clicked_piece and previously_selected_piece
+			# TODO check if previously_selected_piece can capture clicked_piece
 			previously_selected_piece.is_selected = false
 			clicked_piece.is_selected = true
-		
-		# 1. Identify the clicked square
-		# 2. If another piece is selected and it cannot move to the square, deselect it
-		# 3. If another piece is selected and it can move to the square, move it
-		# 4. If no piece is selected and there is a piece on the square, select it
-		
-
 
 func _on_board_area_mouse_entered() -> void:
-	#print("Mouse entered board!")
 	pass

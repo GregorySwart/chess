@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dlhannpw7shu2"]
+
+[ext_resource type="Script" uid="uid://pb2bya1tpeoi" path="res://move_indicator.gd" id="1_rhxhw"]
+[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_woxbe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_woxbe"]
+size = Vector2(64, 64)
+
+[node name="Move Indicator" type="RigidBody2D" unique_id=1541699838]
+gravity_scale = 0.0
+script = ExtResource("1_rhxhw")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1740718699]
+texture = ExtResource("1_woxbe")
+region_enabled = true
+region_rect = Rect2(0, 64, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=74680609]
+shape = SubResource("RectangleShape2D_woxbe")

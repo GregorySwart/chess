@@ -10,6 +10,7 @@ size = Vector2(64, 64)
 input_pickable = true
 gravity_scale = 0.0
 script = ExtResource("1_dk1jb")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1065275686]
 shape = SubResource("RectangleShape2D_2tqba")
