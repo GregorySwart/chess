@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name MoveIndicator
 
 @export var square_alg: String
 

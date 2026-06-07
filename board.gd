@@ -28,8 +28,8 @@ const black_king_squares = ["e8"]
 @export var black_king_scene: PackedScene
 
 # Keep track of all pieces in a dict to ensure only one piece sits on a square
-@export var board_dict: Dictionary[String, Node] = {}
-@export var move_indicators: Array[Node] = []  # NOTE Move indicators are bugged - disabled for now
+@export var board_dict: Dictionary[String, Piece] = {}
+@export var move_indicators: Array[MoveIndicator] = []  # NOTE Move indicators are bugged - disabled for now
 @export var turn: String  # Whose turn is it?
 
 # Called when the node enters the scene tree for the first time.
@@ -41,7 +41,7 @@ func _ready() -> void:
 	
 	for square: String in white_pawn_squares:
 		print("Creating white pawn at %s %s" % [square, str(Utils.to_coords(square))])
-		var white_pawn: Node = white_pawn_scene.instantiate()
+		var white_pawn: Piece = white_pawn_scene.instantiate()
 		white_pawn.position = Utils.to_coords(square)
 		white_pawn.square_alg = square
 		board_dict[square] = white_pawn
@@ -49,7 +49,7 @@ func _ready() -> void:
 
 	for square: String in black_pawn_squares:
 		print("Creating black pawn at %s %s" % [square, str(Utils.to_coords(square))])
-		var black_pawn: Node = black_pawn_scene.instantiate()
+		var black_pawn: Piece = black_pawn_scene.instantiate()
 		black_pawn.position = Utils.to_coords(square)
 		black_pawn.square_alg = square
 		board_dict[square] = black_pawn
@@ -57,7 +57,7 @@ func _ready() -> void:
 		
 	for square: String in white_knight_squares:
 		print("Creating white knight at %s %s" % [square, str(Utils.to_coords(square))])
-		var white_knight: Node = white_knight_scene.instantiate()
+		var white_knight: Piece = white_knight_scene.instantiate()
 		white_knight.position = Utils.to_coords(square)
 		white_knight.square_alg = square
 		board_dict[square] = white_knight
@@ -65,7 +65,7 @@ func _ready() -> void:
 
 	for square: String in black_knight_squares:
 		print("Creating black knight at %s %s" % [square, str(Utils.to_coords(square))])
-		var black_knight: Node = black_knight_scene.instantiate()
+		var black_knight: Piece = black_knight_scene.instantiate()
 		black_knight.position = Utils.to_coords(square)
 		black_knight.square_alg = square
 		board_dict[square] = black_knight
@@ -73,7 +73,7 @@ func _ready() -> void:
 		
 	for square: String in white_bishop_squares:
 		print("Creating white bishop at %s %s" % [square, str(Utils.to_coords(square))])
-		var white_bishop: Node = white_bishop_scene.instantiate()
+		var white_bishop: Piece = white_bishop_scene.instantiate()
 		white_bishop.position = Utils.to_coords(square)
 		white_bishop.square_alg = square
 		board_dict[square] = white_bishop
@@ -81,7 +81,7 @@ func _ready() -> void:
 
 	for square: String in black_bishop_squares:
 		print("Creating black bishop at %s %s" % [square, str(Utils.to_coords(square))])
-		var black_bishop: Node = black_bishop_scene.instantiate()
+		var black_bishop: Piece = black_bishop_scene.instantiate()
 		black_bishop.position = Utils.to_coords(square)
 		black_bishop.square_alg = square
 		board_dict[square] = black_bishop
@@ -89,7 +89,7 @@ func _ready() -> void:
 		
 	for square: String in white_rook_squares:
 		print("Creating white rook at %s %s" % [square, str(Utils.to_coords(square))])
-		var white_rook: Node = white_rook_scene.instantiate()
+		var white_rook: Piece = white_rook_scene.instantiate()
 		white_rook.position = Utils.to_coords(square)
 		white_rook.square_alg = square
 		board_dict[square] = white_rook
@@ -97,7 +97,7 @@ func _ready() -> void:
 
 	for square: String in black_rook_squares:
 		print("Creating black rook at %s %s" % [square, str(Utils.to_coords(square))])
-		var black_rook: Node = black_rook_scene.instantiate()
+		var black_rook: Piece = black_rook_scene.instantiate()
 		black_rook.position = Utils.to_coords(square)
 		black_rook.square_alg = square
 		board_dict[square] = black_rook
@@ -105,7 +105,7 @@ func _ready() -> void:
 		
 	for square: String in white_queen_squares:
 		print("Creating white queen at %s %s" % [square, str(Utils.to_coords(square))])
-		var white_queen: Node = white_queen_scene.instantiate()
+		var white_queen: Piece = white_queen_scene.instantiate()
 		white_queen.position = Utils.to_coords(square)
 		white_queen.square_alg = square
 		board_dict[square] = white_queen
@@ -113,7 +113,7 @@ func _ready() -> void:
 
 	for square: String in black_queen_squares:
 		print("Creating black queen at %s %s" % [square, str(Utils.to_coords(square))])
-		var black_queen: Node = black_queen_scene.instantiate()
+		var black_queen: Piece = black_queen_scene.instantiate()
 		black_queen.position = Utils.to_coords(square)
 		black_queen.square_alg = square
 		board_dict[square] = black_queen
@@ -121,7 +121,7 @@ func _ready() -> void:
 		
 	for square: String in white_king_squares:
 		print("Creating white king at %s %s" % [square, str(Utils.to_coords(square))])
-		var white_king: Node = white_king_scene.instantiate()
+		var white_king: Piece = white_king_scene.instantiate()
 		white_king.position = Utils.to_coords(square)
 		white_king.square_alg = square
 		board_dict[square] = white_king
@@ -129,7 +129,7 @@ func _ready() -> void:
 
 	for square: String in black_king_squares:
 		print("Creating black king at %s %s" % [square, str(Utils.to_coords(square))])
-		var black_king: Node = black_king_scene.instantiate()
+		var black_king: Piece = black_king_scene.instantiate()
 		black_king.position = Utils.to_coords(square)
 		black_king.square_alg = square
 		board_dict[square] = black_king
@@ -145,7 +145,7 @@ func _process(_delta: float) -> void:
 			print("Selected piece: %s (%s)" % [currently_selected_piece.type, currently_selected_piece])
 			print("Piece.square_alg: %s" % currently_selected_piece.square_alg)
 			print("Piece.position: %s" % currently_selected_piece.position)
-			print("Potential moves: %s" % str(currently_selected_piece.get_moves()))
+			print("Potential moves: %s" % str(currently_selected_piece.get_moves(board_dict)))
 			
 		else:
 			print("No piece selected")
@@ -159,7 +159,16 @@ func _process(_delta: float) -> void:
 	if Input.is_action_pressed("m"):
 		var currently_selected_piece: Piece = get_selected_piece()
 		if currently_selected_piece:
-			print("Potential moves: %s" % str(currently_selected_piece.get_moves()))
+			print("Potential moves: %s" % str(currently_selected_piece.get_moves(board_dict)))
+			
+	if Input.is_action_pressed("b"):
+		print("Total pieces in board_dict: %d" % len(board_dict))
+		for k: String in board_dict.keys():
+			var v: Piece = board_dict[k]
+			if is_instance_valid(v):
+				print("%s: %s" % [k, str(v.type)])
+			else:
+				print("Found invalid instance at %s!" % k)
 
 func fetch_piece_at_square(alg: String) -> Piece:
 	print("Fetching piece at %s..." % alg)
@@ -193,7 +202,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 		
 		var alg: String = Utils.to_alg(event.position)  # Clicked square (algebraic notation)
 		print("Clicked board at %s which is identified as %s" % [event.position, alg])
-		var previously_selected_piece: Node = get_selected_piece()
+		var previously_selected_piece: Piece = get_selected_piece()
 		var clicked_piece: Piece = fetch_piece_at_square(alg)
 		
 		var previously_selected_piece_pos: String = previously_selected_piece.square_alg if previously_selected_piece else "<NONE>"
@@ -206,7 +215,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			pass
 			
 		elif not clicked_piece and previously_selected_piece:
-			var potential_moves: Array[String] = previously_selected_piece.get_moves()
+			var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
 			if alg in potential_moves:
 				var start_position: String = previously_selected_piece.square_alg
 				previously_selected_piece.position = Utils.to_coords(alg)
@@ -220,7 +229,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			if clicked_piece.colour == turn:
 				clicked_piece.is_selected = true
 			
-			var potential_moves: Array[String] = clicked_piece.get_moves()
+			var potential_moves: Array[String] = clicked_piece.get_moves(board_dict)
 			for potential_move in potential_moves:
 				# TODO Fix the below move indicator logic - bugs out for some reason
 				
@@ -239,15 +248,29 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			if clicked_piece == previously_selected_piece:
 				previously_selected_piece.is_selected = false
 				clicked_piece.is_selected = false
+				return
 				
 			if clicked_piece.colour == turn:
 				previously_selected_piece.is_selected = false
 				clicked_piece.is_selected = true
-			else:  # clicked_piece.colour != turn
-				# TODO Add capture logic here
-				previously_selected_piece.is_selected = false
-				clicked_piece.is_selected = false
 			
+			elif clicked_piece.colour != turn:
+				var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
+				
+				if clicked_piece.square_alg in potential_moves:
+					previously_selected_piece.is_selected = false
+					clicked_piece.is_selected = false
+					
+					board_dict.erase(previously_selected_piece.square_alg)
+					board_dict[clicked_piece.square_alg] = previously_selected_piece
+					previously_selected_piece.position = clicked_piece.position
+					previously_selected_piece.square_alg = clicked_piece.square_alg
+					turn = Utils.update_turn(turn)
+					clicked_piece.queue_free()
+				else:
+					previously_selected_piece.is_selected = false
+					clicked_piece.is_selected = false
+		
 		else:
 			print("UNHANDLED CLICK!!!")
 

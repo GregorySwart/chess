@@ -12,7 +12,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super(delta)
 
-func get_moves() -> Array[String]:
+func get_moves(_board_dict: Dictionary[String, Piece]) -> Array[String]:
 	# TODO Implement move logic
 	var _potential_moves: Array[String] = []
 	var _current_square: Vector2i = Utils.alg_to_board_coords(square_alg)
