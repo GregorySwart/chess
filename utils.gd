@@ -72,3 +72,8 @@ static func board_coords_to_alg(board_coords: Vector2i) -> String:
 	var file: String = file_dict[int(board_coords.x)]
 	var rank: String = rank_dict[int(board_coords.y)]
 	return file + rank
+	
+static func update_turn(turn: String) -> String:
+	var new_turn: String = {"black": "white", "white": "black"}[turn]
+	print("Chaging turn %s -> %s" % [turn, new_turn])
+	return new_turn
