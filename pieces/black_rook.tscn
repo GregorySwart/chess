@@ -1,25 +1,25 @@
-[gd_scene format=3 uid="uid://c8a3boonm4cq0"]
+[gd_scene format=3 uid="uid://dbbip4t7ok23f"]
 
-[ext_resource type="Script" uid="uid://ddgegfl6g362j" path="res://white_rook.gd" id="1_cf8ka"]
-[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="2_hdr4h"]
+[ext_resource type="Script" uid="uid://botdoqt5ggn0q" path="res://pieces/black_rook.gd" id="1_jebxk"]
+[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="2_qwwjc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f14ny"]
 size = Vector2(64, 64)
 
-[node name="White Rook" type="RigidBody2D" unique_id=67238183]
+[node name="Black Rook" type="RigidBody2D" unique_id=67238183]
 gravity_scale = 0.0
-script = ExtResource("1_cf8ka")
+script = ExtResource("1_jebxk")
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1392774489]
-texture = ExtResource("2_hdr4h")
+texture = ExtResource("2_qwwjc")
 region_enabled = true
-region_rect = Rect2(128, 64, 64, 64)
+region_rect = Rect2(192, 64, 64, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1142154014]
 shape = SubResource("RectangleShape2D_f14ny")
 
 [node name="Selection Box" type="Sprite2D" parent="." unique_id=1877000206]
-texture = ExtResource("2_hdr4h")
+texture = ExtResource("2_qwwjc")
 region_enabled = true
 region_rect = Rect2(64, 64, 64, 64)

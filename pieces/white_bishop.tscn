@@ -1,25 +1,25 @@
-[gd_scene format=3 uid="uid://dusv8x8mn4n2n"]
+[gd_scene format=3 uid="uid://bhalwne8c2wqq"]
 
-[ext_resource type="Script" uid="uid://qgmaxbvdsa2m" path="res://white_knight.gd" id="1_0sh05"]
-[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_i7alr"]
+[ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_12lkd"]
+[ext_resource type="Script" uid="uid://de5yfdovdu53x" path="res://pieces/white_bishop.gd" id="1_68pco"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f14ny"]
 size = Vector2(64, 64)
 
-[node name="White Knight" type="RigidBody2D" unique_id=67238183]
+[node name="White Bishop" type="RigidBody2D" unique_id=67238183]
 gravity_scale = 0.0
-script = ExtResource("1_0sh05")
+script = ExtResource("1_68pco")
 metadata/_edit_group_ = true
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1392774489]
-texture = ExtResource("1_i7alr")
+texture = ExtResource("1_12lkd")
 region_enabled = true
-region_rect = Rect2(128, 192, 64, 64)
+region_rect = Rect2(128, 128, 64, 64)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1142154014]
 shape = SubResource("RectangleShape2D_f14ny")
 
 [node name="Selection Box" type="Sprite2D" parent="." unique_id=1877000206]
-texture = ExtResource("1_i7alr")
+texture = ExtResource("1_12lkd")
 region_enabled = true
 region_rect = Rect2(64, 64, 64, 64)

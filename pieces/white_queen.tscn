@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cqn1g7k3pphuc"]
 
-[ext_resource type="Script" uid="uid://cj0khm7qf47px" path="res://white_queen.gd" id="1_4y3iv"]
+[ext_resource type="Script" uid="uid://cj0khm7qf47px" path="res://pieces/white_queen.gd" id="1_4y3iv"]
 [ext_resource type="Texture2D" uid="uid://bugnsfp0ehvqn" path="res://assets/chess_atlas.png" id="1_gl15b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f14ny"]
