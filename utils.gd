@@ -73,8 +73,18 @@ static func board_coords_to_alg(board_coords: Vector2i) -> String:
 	var file: String = FILE_DICT[int(board_coords.x)]
 	var rank: String = RANK_DICT[int(board_coords.y)]
 	return file + rank
-	
+
+
 static func update_turn(turn: String) -> String:
 	var new_turn: String = {"black": "white", "white": "black"}[turn]
 	print("Chaging turn %s -> %s" % [turn, new_turn])
 	return new_turn
+
+
+static func spawn_piece(parent: Node, piece_scene: PackedScene, square: String, board_dict: Dictionary) -> Piece:
+	var piece: Piece = piece_scene.instantiate()
+	piece.position = alg_to_pixel_coords(square)
+	piece.square_alg = square
+	parent.add_child(piece)
+	board_dict[square] = piece
+	return piece

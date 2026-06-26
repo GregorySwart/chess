@@ -35,105 +35,46 @@ const BLACK_KING_SQUARES = ["e8"]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	turn = "white"
-	
-	# TODO Figure out a way to factor this out into a util fn - can Utils import the piece scenes?
-	# Can I just declare the piece scenes as export vars in Utils too?
-	
+	board_setup()
+
+func board_setup() -> void:
+	## Place all pieces on the board for the initial position
+
 	for square: String in WHITE_PAWN_SQUARES:
-		print("Creating white pawn at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var white_pawn: Piece = white_pawn_scene.instantiate()
-		white_pawn.position = Utils.alg_to_pixel_coords(square)
-		white_pawn.square_alg = square
-		board_dict[square] = white_pawn
-		add_child(white_pawn)
+		Utils.spawn_piece(self, white_pawn_scene, square, board_dict)
 
 	for square: String in BLACK_PAWN_SQUARES:
-		print("Creating black pawn at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var black_pawn: Piece = black_pawn_scene.instantiate()
-		black_pawn.position = Utils.alg_to_pixel_coords(square)
-		black_pawn.square_alg = square
-		board_dict[square] = black_pawn
-		add_child(black_pawn)
-		
+		Utils.spawn_piece(self, black_pawn_scene, square, board_dict)
+
 	for square: String in WHITE_KNIGHT_SQUARES:
-		print("Creating white knight at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var white_knight: Piece = white_knight_scene.instantiate()
-		white_knight.position = Utils.alg_to_pixel_coords(square)
-		white_knight.square_alg = square
-		board_dict[square] = white_knight
-		add_child(white_knight)
+		Utils.spawn_piece(self, white_knight_scene, square, board_dict)
 
 	for square: String in BLACK_KNIGHT_SQUARES:
-		print("Creating black knight at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var black_knight: Piece = black_knight_scene.instantiate()
-		black_knight.position = Utils.alg_to_pixel_coords(square)
-		black_knight.square_alg = square
-		board_dict[square] = black_knight
-		add_child(black_knight)
-		
+		Utils.spawn_piece(self, black_knight_scene, square, board_dict)
+	
 	for square: String in WHITE_BISHOP_SQUARES:
-		print("Creating white bishop at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var white_bishop: Piece = white_bishop_scene.instantiate()
-		white_bishop.position = Utils.alg_to_pixel_coords(square)
-		white_bishop.square_alg = square
-		board_dict[square] = white_bishop
-		add_child(white_bishop)
+		Utils.spawn_piece(self, white_bishop_scene, square, board_dict)
 
 	for square: String in BLACK_BISHOP_SQUARES:
-		print("Creating black bishop at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var black_bishop: Piece = black_bishop_scene.instantiate()
-		black_bishop.position = Utils.alg_to_pixel_coords(square)
-		black_bishop.square_alg = square
-		board_dict[square] = black_bishop
-		add_child(black_bishop)
-		
+		Utils.spawn_piece(self, black_bishop_scene, square, board_dict)
+
 	for square: String in WHITE_ROOK_SQUARES:
-		print("Creating white rook at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var white_rook: Piece = white_rook_scene.instantiate()
-		white_rook.position = Utils.alg_to_pixel_coords(square)
-		white_rook.square_alg = square
-		board_dict[square] = white_rook
-		add_child(white_rook)
+		Utils.spawn_piece(self, white_rook_scene, square, board_dict)
 
 	for square: String in BLACK_ROOK_SQUARES:
-		print("Creating black rook at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var black_rook: Piece = black_rook_scene.instantiate()
-		black_rook.position = Utils.alg_to_pixel_coords(square)
-		black_rook.square_alg = square
-		board_dict[square] = black_rook
-		add_child(black_rook)
-		
+		Utils.spawn_piece(self, black_rook_scene, square, board_dict)
+
 	for square: String in WHITE_QUEEN_SQUARES:
-		print("Creating white queen at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var white_queen: Piece = white_queen_scene.instantiate()
-		white_queen.position = Utils.alg_to_pixel_coords(square)
-		white_queen.square_alg = square
-		board_dict[square] = white_queen
-		add_child(white_queen)
+		Utils.spawn_piece(self, white_queen_scene, square, board_dict)
 
 	for square: String in BLACK_QUEEN_SQUARES:
-		print("Creating black queen at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var black_queen: Piece = black_queen_scene.instantiate()
-		black_queen.position = Utils.alg_to_pixel_coords(square)
-		black_queen.square_alg = square
-		board_dict[square] = black_queen
-		add_child(black_queen)
-		
+		Utils.spawn_piece(self, black_queen_scene, square, board_dict)
+
 	for square: String in WHITE_KING_SQUARES:
-		print("Creating white king at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var white_king: Piece = white_king_scene.instantiate()
-		white_king.position = Utils.alg_to_pixel_coords(square)
-		white_king.square_alg = square
-		board_dict[square] = white_king
-		add_child(white_king)
+		Utils.spawn_piece(self, white_king_scene, square, board_dict)
 
 	for square: String in BLACK_KING_SQUARES:
-		print("Creating black king at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
-		var black_king: Piece = black_king_scene.instantiate()
-		black_king.position = Utils.alg_to_pixel_coords(square)
-		black_king.square_alg = square
-		board_dict[square] = black_king
-		add_child(black_king)
+		Utils.spawn_piece(self, black_king_scene, square, board_dict)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
