@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://ch7oeg2516r73" path="res://pieces/black_queen.tscn" id="13_7plpp"]
 [ext_resource type="PackedScene" uid="uid://bwh4kgkpk5kc2" path="res://pieces/white_king.tscn" id="14_lxheh"]
 [ext_resource type="PackedScene" uid="uid://ca8ex180en5ff" path="res://pieces/black_king.tscn" id="15_r6t13"]
+[ext_resource type="AudioStream" uid="uid://c0rocgqw3pcwn" path="res://assets/sound_effects/piece_moved.mp3" id="16_7plpp"]
+[ext_resource type="AudioStream" uid="uid://b1am2tq3qn2fr" path="res://assets/sound_effects/piece_captured.mp3" id="17_lxheh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vqaso"]
 texture = ExtResource("1_psm7c")
@@ -59,6 +61,12 @@ position = Vector2(256, 256)
 shape = SubResource("RectangleShape2D_0ugm7")
 
 [node name="Board Sprite" type="Sprite2D" parent="Board Area" unique_id=257133868]
+
+[node name="Piece Moved" type="AudioStreamPlayer" parent="." unique_id=1228838523]
+stream = ExtResource("16_7plpp")
+
+[node name="Piece Captured" type="AudioStreamPlayer" parent="." unique_id=1488411167]
+stream = ExtResource("17_lxheh")
 
 [connection signal="input_event" from="Board Area" to="." method="_on_board_area_input_event"]
 [connection signal="mouse_entered" from="Board Area" to="." method="_on_board_area_mouse_entered"]

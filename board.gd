@@ -216,6 +216,8 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			pass
 			
 		elif not clicked_piece and previously_selected_piece:
+			# A piece is already selected and the user clicks on an empty square -> Move or deselect
+			
 			var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
 			if alg in potential_moves:
 				var start_position: String = previously_selected_piece.square_alg
@@ -224,9 +226,12 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				board_dict.erase(start_position)
 				board_dict[alg] = previously_selected_piece
 				turn = Utils.update_turn(turn)
+				$"Piece Moved".play()
 			previously_selected_piece.is_selected = false
 		
 		elif clicked_piece and not previously_selected_piece:
+			# There is no piece already selected and the user clicks on a piece -> Select the piece
+			
 			if clicked_piece.colour == turn:
 				clicked_piece.is_selected = true
 			
@@ -246,6 +251,8 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				pass
 		
 		elif clicked_piece and previously_selected_piece:
+			# A piece is already selected and the user clicks on another piece -> Cap or deselect
+			
 			if clicked_piece == previously_selected_piece:
 				previously_selected_piece.is_selected = false
 				clicked_piece.is_selected = false
@@ -268,6 +275,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 					previously_selected_piece.square_alg = clicked_piece.square_alg
 					turn = Utils.update_turn(turn)
 					clicked_piece.queue_free()
+					$"Piece Captured".play()
 				else:
 					previously_selected_piece.is_selected = false
 					clicked_piece.is_selected = false
