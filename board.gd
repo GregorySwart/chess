@@ -40,97 +40,97 @@ func _ready() -> void:
 	# Can I just declare the piece scenes as export vars in Utils too?
 	
 	for square: String in WHITE_PAWN_SQUARES:
-		print("Creating white pawn at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating white pawn at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var white_pawn: Piece = white_pawn_scene.instantiate()
-		white_pawn.position = Utils.to_coords(square)
+		white_pawn.position = Utils.alg_to_pixel_coords(square)
 		white_pawn.square_alg = square
 		board_dict[square] = white_pawn
 		add_child(white_pawn)
 
 	for square: String in BLACK_PAWN_SQUARES:
-		print("Creating black pawn at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating black pawn at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var black_pawn: Piece = black_pawn_scene.instantiate()
-		black_pawn.position = Utils.to_coords(square)
+		black_pawn.position = Utils.alg_to_pixel_coords(square)
 		black_pawn.square_alg = square
 		board_dict[square] = black_pawn
 		add_child(black_pawn)
 		
 	for square: String in WHITE_KNIGHT_SQUARES:
-		print("Creating white knight at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating white knight at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var white_knight: Piece = white_knight_scene.instantiate()
-		white_knight.position = Utils.to_coords(square)
+		white_knight.position = Utils.alg_to_pixel_coords(square)
 		white_knight.square_alg = square
 		board_dict[square] = white_knight
 		add_child(white_knight)
 
 	for square: String in BLACK_KNIGHT_SQUARES:
-		print("Creating black knight at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating black knight at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var black_knight: Piece = black_knight_scene.instantiate()
-		black_knight.position = Utils.to_coords(square)
+		black_knight.position = Utils.alg_to_pixel_coords(square)
 		black_knight.square_alg = square
 		board_dict[square] = black_knight
 		add_child(black_knight)
 		
 	for square: String in WHITE_BISHOP_SQUARES:
-		print("Creating white bishop at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating white bishop at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var white_bishop: Piece = white_bishop_scene.instantiate()
-		white_bishop.position = Utils.to_coords(square)
+		white_bishop.position = Utils.alg_to_pixel_coords(square)
 		white_bishop.square_alg = square
 		board_dict[square] = white_bishop
 		add_child(white_bishop)
 
 	for square: String in BLACK_BISHOP_SQUARES:
-		print("Creating black bishop at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating black bishop at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var black_bishop: Piece = black_bishop_scene.instantiate()
-		black_bishop.position = Utils.to_coords(square)
+		black_bishop.position = Utils.alg_to_pixel_coords(square)
 		black_bishop.square_alg = square
 		board_dict[square] = black_bishop
 		add_child(black_bishop)
 		
 	for square: String in WHITE_ROOK_SQUARES:
-		print("Creating white rook at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating white rook at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var white_rook: Piece = white_rook_scene.instantiate()
-		white_rook.position = Utils.to_coords(square)
+		white_rook.position = Utils.alg_to_pixel_coords(square)
 		white_rook.square_alg = square
 		board_dict[square] = white_rook
 		add_child(white_rook)
 
 	for square: String in BLACK_ROOK_SQUARES:
-		print("Creating black rook at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating black rook at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var black_rook: Piece = black_rook_scene.instantiate()
-		black_rook.position = Utils.to_coords(square)
+		black_rook.position = Utils.alg_to_pixel_coords(square)
 		black_rook.square_alg = square
 		board_dict[square] = black_rook
 		add_child(black_rook)
 		
 	for square: String in WHITE_QUEEN_SQUARES:
-		print("Creating white queen at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating white queen at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var white_queen: Piece = white_queen_scene.instantiate()
-		white_queen.position = Utils.to_coords(square)
+		white_queen.position = Utils.alg_to_pixel_coords(square)
 		white_queen.square_alg = square
 		board_dict[square] = white_queen
 		add_child(white_queen)
 
 	for square: String in BLACK_QUEEN_SQUARES:
-		print("Creating black queen at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating black queen at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var black_queen: Piece = black_queen_scene.instantiate()
-		black_queen.position = Utils.to_coords(square)
+		black_queen.position = Utils.alg_to_pixel_coords(square)
 		black_queen.square_alg = square
 		board_dict[square] = black_queen
 		add_child(black_queen)
 		
 	for square: String in WHITE_KING_SQUARES:
-		print("Creating white king at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating white king at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var white_king: Piece = white_king_scene.instantiate()
-		white_king.position = Utils.to_coords(square)
+		white_king.position = Utils.alg_to_pixel_coords(square)
 		white_king.square_alg = square
 		board_dict[square] = white_king
 		add_child(white_king)
 
 	for square: String in BLACK_KING_SQUARES:
-		print("Creating black king at %s %s" % [square, str(Utils.to_coords(square))])
+		print("Creating black king at %s %s" % [square, str(Utils.alg_to_pixel_coords(square))])
 		var black_king: Piece = black_king_scene.instantiate()
-		black_king.position = Utils.to_coords(square)
+		black_king.position = Utils.alg_to_pixel_coords(square)
 		black_king.square_alg = square
 		board_dict[square] = black_king
 		add_child(black_king)
@@ -200,7 +200,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 	if event.is_action_pressed("left_click"):
 		remove_move_indicators()
 		
-		var alg: String = Utils.to_alg(event.position)  # Clicked square (algebraic notation)
+		var alg: String = Utils.pixel_coords_to_alg(event.position)  # Clicked square (algebraic notation)
 		print("Clicked board at %s which is identified as %s" % [event.position, alg])
 		var previously_selected_piece: Piece = get_selected_piece()
 		var clicked_piece: Piece = fetch_piece_at_square(alg)
@@ -221,7 +221,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
 			if alg in potential_moves:
 				var start_position: String = previously_selected_piece.square_alg
-				previously_selected_piece.position = Utils.to_coords(alg)
+				previously_selected_piece.position = Utils.alg_to_pixel_coords(alg)
 				previously_selected_piece.square_alg = alg
 				board_dict.erase(start_position)
 				board_dict[alg] = previously_selected_piece
