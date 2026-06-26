@@ -1,17 +1,17 @@
 extends TileMapLayer
 
-const white_pawn_squares = ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"]
-const black_pawn_squares = ["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"]
-const white_knight_squares = ["b1", "g1"]
-const black_knight_squares = ["b8", "g8"]
-const white_bishop_squares = ["c1", "f1"]
-const black_bishop_squares = ["c8", "f8"]
-const white_rook_squares = ["a1", "h1"]
-const black_rook_squares = ["a8", "h8"]
-const white_queen_squares = ["d1"]
-const black_queen_squares = ["d8"]
-const white_king_squares = ["e1"]
-const black_king_squares = ["e8"]
+const WHITE_PAWN_SQUARES = ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"]
+const BLACK_PAWN_SQUARES = ["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"]
+const WHITE_KNIGHT_SQUARES = ["b1", "g1"]
+const BLACK_KNIGHT_SQUARES = ["b8", "g8"]
+const WHITE_BISHOP_SQUARES = ["c1", "f1"]
+const BLACK_BISHOP_SQUARES = ["c8", "f8"]
+const WHITE_ROOK_SQUARES = ["a1", "h1"]
+const BLACK_ROOK_SQUARES = ["a8", "h8"]
+const WHITE_QUEEN_SQUARES = ["d1"]
+const BLACK_QUEEN_SQUARES = ["d8"]
+const WHITE_KING_SQUARES = ["e1"]
+const BLACK_KING_SQUARES = ["e8"]
 
 @export var move_indicator_scene: PackedScene
 @export var white_pawn_scene: PackedScene
@@ -39,7 +39,7 @@ func _ready() -> void:
 	# TODO Figure out a way to factor this out into a util fn - can Utils import the piece scenes?
 	# Can I just declare the piece scenes as export vars in Utils too?
 	
-	for square: String in white_pawn_squares:
+	for square: String in WHITE_PAWN_SQUARES:
 		print("Creating white pawn at %s %s" % [square, str(Utils.to_coords(square))])
 		var white_pawn: Piece = white_pawn_scene.instantiate()
 		white_pawn.position = Utils.to_coords(square)
@@ -47,7 +47,7 @@ func _ready() -> void:
 		board_dict[square] = white_pawn
 		add_child(white_pawn)
 
-	for square: String in black_pawn_squares:
+	for square: String in BLACK_PAWN_SQUARES:
 		print("Creating black pawn at %s %s" % [square, str(Utils.to_coords(square))])
 		var black_pawn: Piece = black_pawn_scene.instantiate()
 		black_pawn.position = Utils.to_coords(square)
@@ -55,7 +55,7 @@ func _ready() -> void:
 		board_dict[square] = black_pawn
 		add_child(black_pawn)
 		
-	for square: String in white_knight_squares:
+	for square: String in WHITE_KNIGHT_SQUARES:
 		print("Creating white knight at %s %s" % [square, str(Utils.to_coords(square))])
 		var white_knight: Piece = white_knight_scene.instantiate()
 		white_knight.position = Utils.to_coords(square)
@@ -63,7 +63,7 @@ func _ready() -> void:
 		board_dict[square] = white_knight
 		add_child(white_knight)
 
-	for square: String in black_knight_squares:
+	for square: String in BLACK_KNIGHT_SQUARES:
 		print("Creating black knight at %s %s" % [square, str(Utils.to_coords(square))])
 		var black_knight: Piece = black_knight_scene.instantiate()
 		black_knight.position = Utils.to_coords(square)
@@ -71,7 +71,7 @@ func _ready() -> void:
 		board_dict[square] = black_knight
 		add_child(black_knight)
 		
-	for square: String in white_bishop_squares:
+	for square: String in WHITE_BISHOP_SQUARES:
 		print("Creating white bishop at %s %s" % [square, str(Utils.to_coords(square))])
 		var white_bishop: Piece = white_bishop_scene.instantiate()
 		white_bishop.position = Utils.to_coords(square)
@@ -79,7 +79,7 @@ func _ready() -> void:
 		board_dict[square] = white_bishop
 		add_child(white_bishop)
 
-	for square: String in black_bishop_squares:
+	for square: String in BLACK_BISHOP_SQUARES:
 		print("Creating black bishop at %s %s" % [square, str(Utils.to_coords(square))])
 		var black_bishop: Piece = black_bishop_scene.instantiate()
 		black_bishop.position = Utils.to_coords(square)
@@ -87,7 +87,7 @@ func _ready() -> void:
 		board_dict[square] = black_bishop
 		add_child(black_bishop)
 		
-	for square: String in white_rook_squares:
+	for square: String in WHITE_ROOK_SQUARES:
 		print("Creating white rook at %s %s" % [square, str(Utils.to_coords(square))])
 		var white_rook: Piece = white_rook_scene.instantiate()
 		white_rook.position = Utils.to_coords(square)
@@ -95,7 +95,7 @@ func _ready() -> void:
 		board_dict[square] = white_rook
 		add_child(white_rook)
 
-	for square: String in black_rook_squares:
+	for square: String in BLACK_ROOK_SQUARES:
 		print("Creating black rook at %s %s" % [square, str(Utils.to_coords(square))])
 		var black_rook: Piece = black_rook_scene.instantiate()
 		black_rook.position = Utils.to_coords(square)
@@ -103,7 +103,7 @@ func _ready() -> void:
 		board_dict[square] = black_rook
 		add_child(black_rook)
 		
-	for square: String in white_queen_squares:
+	for square: String in WHITE_QUEEN_SQUARES:
 		print("Creating white queen at %s %s" % [square, str(Utils.to_coords(square))])
 		var white_queen: Piece = white_queen_scene.instantiate()
 		white_queen.position = Utils.to_coords(square)
@@ -111,7 +111,7 @@ func _ready() -> void:
 		board_dict[square] = white_queen
 		add_child(white_queen)
 
-	for square: String in black_queen_squares:
+	for square: String in BLACK_QUEEN_SQUARES:
 		print("Creating black queen at %s %s" % [square, str(Utils.to_coords(square))])
 		var black_queen: Piece = black_queen_scene.instantiate()
 		black_queen.position = Utils.to_coords(square)
@@ -119,7 +119,7 @@ func _ready() -> void:
 		board_dict[square] = black_queen
 		add_child(black_queen)
 		
-	for square: String in white_king_squares:
+	for square: String in WHITE_KING_SQUARES:
 		print("Creating white king at %s %s" % [square, str(Utils.to_coords(square))])
 		var white_king: Piece = white_king_scene.instantiate()
 		white_king.position = Utils.to_coords(square)
@@ -127,7 +127,7 @@ func _ready() -> void:
 		board_dict[square] = white_king
 		add_child(white_king)
 
-	for square: String in black_king_squares:
+	for square: String in BLACK_KING_SQUARES:
 		print("Creating black king at %s %s" % [square, str(Utils.to_coords(square))])
 		var black_king: Piece = black_king_scene.instantiate()
 		black_king.position = Utils.to_coords(square)
@@ -173,11 +173,11 @@ func _process(_delta: float) -> void:
 func fetch_piece_at_square(alg: String) -> Piece:
 	print("Fetching piece at %s..." % alg)
 	var piece: Piece = board_dict.get(alg)
-	
+
 	return piece
 
 func get_selected_piece() -> Node:
-	""" Return the currently selected piece - if no piece is selected, return null """
+	## Return the currently selected piece - if no piece is selected, return null
 	print("Checking for any selected pieces...")
 	for square in board_dict:
 		var piece: Node = board_dict[square]
@@ -196,7 +196,7 @@ func remove_move_indicators() -> void:
 	move_indicators = []
 
 func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	""" Board is clicked """
+	## Board is clicked
 	if event.is_action_pressed("left_click"):
 		remove_move_indicators()
 		
@@ -205,7 +205,8 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 		var previously_selected_piece: Piece = get_selected_piece()
 		var clicked_piece: Piece = fetch_piece_at_square(alg)
 		
-		var previously_selected_piece_pos: String = previously_selected_piece.square_alg if previously_selected_piece else "<NONE>"
+		var previously_selected_piece_pos: String = previously_selected_piece.square_alg \
+			if previously_selected_piece else "<NONE>"
 		var clicked_piece_pos: String = clicked_piece.square_alg if clicked_piece else "<NONE>"
 		print("Previously selected piece: %s - clicked piece: %s" % [previously_selected_piece_pos, clicked_piece_pos])
 		
