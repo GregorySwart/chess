@@ -136,6 +136,33 @@ func remove_move_indicators() -> void:
 		move_indicator.queue_free()
 	move_indicators = []
 
+func select_piece(piece: Piece) -> void:
+	piece.is_selected = true
+
+func deselect_piece(piece: Piece) -> void:
+	if piece:
+		piece.is_selected = false
+
+func move_piece(piece: Piece, destination_alg: String) -> void:
+	var start_position: String = piece.square_alg
+	piece.position = Utils.alg_to_pixel_coords(destination_alg)
+	piece.square_alg = destination_alg
+	board_dict.erase(start_position)
+	board_dict[destination_alg] = piece
+	turn = Utils.update_turn(turn)
+	$"Piece Moved".play()
+
+func capture_piece(attacker: Piece, defender: Piece) -> void:
+	var start_position: String = attacker.square_alg
+	var destination_alg: String = defender.square_alg
+	attacker.position = defender.position
+	attacker.square_alg = destination_alg
+	board_dict.erase(start_position)
+	board_dict[destination_alg] = attacker
+	turn = Utils.update_turn(turn)
+	defender.queue_free()
+	$"Piece Captured".play()
+
 func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	## Board is clicked
 	if event.is_action_pressed("left_click"):
@@ -155,34 +182,28 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 		if not clicked_piece and not previously_selected_piece:
 			# Nothing happens - maybe add some logging
 			pass
-			
+		
 		elif not clicked_piece and previously_selected_piece:
 			# A piece is already selected and the user clicks on an empty square -> Move or deselect
 			
 			var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
 			if alg in potential_moves:
-				var start_position: String = previously_selected_piece.square_alg
-				previously_selected_piece.position = Utils.alg_to_pixel_coords(alg)
-				previously_selected_piece.square_alg = alg
-				board_dict.erase(start_position)
-				board_dict[alg] = previously_selected_piece
-				turn = Utils.update_turn(turn)
-				$"Piece Moved".play()
-			previously_selected_piece.is_selected = false
+				move_piece(previously_selected_piece, alg)
+			deselect_piece(previously_selected_piece)
 		
 		elif clicked_piece and not previously_selected_piece:
 			# There is no piece already selected and the user clicks on a piece -> Select the piece
 			
 			if clicked_piece.colour == turn:
-				clicked_piece.is_selected = true
+				select_piece(clicked_piece)
 			
 			var potential_moves: Array[String] = clicked_piece.get_moves(board_dict)
 			for potential_move in potential_moves:
 				# TODO Fix the below move indicator logic - bugs out for some reason
-				
+
 				# BUG When move indicators are rendered other pieces are rendered at their starting position, while
 				# retaining their correct `piece.position`
-				
+
 				#print("Rendering move indicator at %s %s" % [potential_move, str(Utils.to_coords(potential_move))])
 				#var move_indicator: Node = move_indicator_scene.instantiate()
 				#move_indicator.position = Utils.to_coords(potential_move)
@@ -195,34 +216,20 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			# A piece is already selected and the user clicks on another piece -> Cap or deselect
 			
 			if clicked_piece == previously_selected_piece:
-				previously_selected_piece.is_selected = false
-				clicked_piece.is_selected = false
+				deselect_piece(previously_selected_piece)
 				return
-				
+			
 			if clicked_piece.colour == turn:
-				previously_selected_piece.is_selected = false
-				clicked_piece.is_selected = true
+				deselect_piece(previously_selected_piece)
+				select_piece(clicked_piece)
 			
 			elif clicked_piece.colour != turn:
 				var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
-				
 				if clicked_piece.square_alg in potential_moves:
-					previously_selected_piece.is_selected = false
-					clicked_piece.is_selected = false
-					
-					board_dict.erase(previously_selected_piece.square_alg)
-					board_dict[clicked_piece.square_alg] = previously_selected_piece
-					previously_selected_piece.position = clicked_piece.position
-					previously_selected_piece.square_alg = clicked_piece.square_alg
-					turn = Utils.update_turn(turn)
-					clicked_piece.queue_free()
-					$"Piece Captured".play()
+					capture_piece(previously_selected_piece, clicked_piece)
 				else:
-					previously_selected_piece.is_selected = false
-					clicked_piece.is_selected = false
+					deselect_piece(previously_selected_piece)
+					deselect_piece(clicked_piece)
 		
 		else:
 			print("UNHANDLED CLICK!!!")
-
-func _on_board_area_mouse_entered() -> void:
-	pass
