@@ -31,5 +31,21 @@ func get_moves(board_dict: Dictionary[String, Piece]) -> Array[String]:
 			var other_piece: Piece = board_dict[target_square_alg]
 			if other_piece.colour != colour:
 				potential_moves.append(target_square_alg)
+	
+	if square_alg == "e1" and not has_moved:
+		# Check eligibility for castling
 		
+		# 1. King's side
+		if not board_dict.get("f1") and not board_dict.get("g1") and board_dict.get("h1"):
+			var corner_piece: Piece = board_dict["h1"]
+			if corner_piece.type == "White Rook" and not corner_piece.has_moved:
+				potential_moves.append("g1")
+
+		# 2. Queen's side
+		if board_dict.get("a1") and not board_dict.get("b1") and not board_dict.get("c1") and not board_dict.get("d1"):
+			var corner_piece: Piece = board_dict["a1"]
+			if corner_piece.type == "White Rook" and not corner_piece.has_moved:
+				potential_moves.append("c1")
+
+
 	return potential_moves

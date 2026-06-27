@@ -94,7 +94,7 @@ func _process(_delta: float) -> void:
 		
 		print("Board dictionary:")
 		for k in board_dict:
-			var v: Node = board_dict[k]
+			var v: Piece = board_dict[k]
 			print("%s: %s (%s)" % [k , v.type, v])
 	
 	if Input.is_action_pressed("m"):
@@ -117,11 +117,11 @@ func fetch_piece_at_square(alg: String) -> Piece:
 
 	return piece
 
-func get_selected_piece() -> Node:
+func get_selected_piece() -> Piece:
 	## Return the currently selected piece - if no piece is selected, return null
 	print("Checking for any selected pieces...")
 	for square in board_dict:
-		var piece: Node = board_dict[square]
+		var piece: Piece = board_dict[square]
 		if piece.is_selected:
 			print("Found selected piece %s at %s" % [piece, square])
 			return piece
@@ -143,12 +143,47 @@ func deselect_piece(piece: Piece) -> void:
 	if piece:
 		piece.is_selected = false
 
+func check_castling(piece: Piece, destination_alg: String) -> void:
+	if piece.type == "White King" and destination_alg == "g1":
+		var rook: Piece = board_dict["h1"]
+		rook.position = Utils.alg_to_pixel_coords("f1")
+		rook.square_alg = destination_alg
+		rook.has_moved = true
+		board_dict.erase("h1")
+		board_dict["f1"] = rook
+	elif piece.type == "White King" and destination_alg == "c1":
+		var rook: Piece = board_dict["a1"]
+		rook.position = Utils.alg_to_pixel_coords("d1")
+		rook.square_alg = destination_alg
+		rook.has_moved = true
+		board_dict.erase("a1")
+		board_dict["d1"] = rook
+	elif piece.type == "Black King" and destination_alg == "g8":
+		var rook: Piece = board_dict["h8"]
+		rook.position = Utils.alg_to_pixel_coords("f8")
+		rook.square_alg = destination_alg
+		rook.has_moved = true
+		board_dict.erase("h8")
+		board_dict["f8"] = rook
+	elif piece.type == "Black King" and destination_alg == "c8":
+		var rook: Piece = board_dict["a8"]
+		rook.position = Utils.alg_to_pixel_coords("d8")
+		rook.square_alg = destination_alg
+		rook.has_moved = true
+		board_dict.erase("a8")
+		board_dict["d8"] = rook
+
+
 func move_piece(piece: Piece, destination_alg: String) -> void:
 	var start_position: String = piece.square_alg
 	piece.position = Utils.alg_to_pixel_coords(destination_alg)
 	piece.square_alg = destination_alg
+	piece.has_moved = true
 	board_dict.erase(start_position)
 	board_dict[destination_alg] = piece
+
+	check_castling(piece, destination_alg)
+
 	turn = Utils.update_turn(turn)
 	$"Piece Moved".play()
 
@@ -194,8 +229,10 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 		elif clicked_piece and not previously_selected_piece:
 			# There is no piece already selected and the user clicks on a piece -> Select the piece
 			
-			if clicked_piece.colour == turn:
-				select_piece(clicked_piece)
+			if clicked_piece.colour != turn:
+				return
+			
+			select_piece(clicked_piece)
 			
 			var potential_moves: Array[String] = clicked_piece.get_moves(board_dict)
 			for potential_move in potential_moves:
@@ -222,8 +259,9 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			if clicked_piece.colour == turn:
 				deselect_piece(previously_selected_piece)
 				select_piece(clicked_piece)
+				return
 			
-			elif clicked_piece.colour != turn:
+			if clicked_piece.colour != turn:
 				var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
 				if clicked_piece.square_alg in potential_moves:
 					capture_piece(previously_selected_piece, clicked_piece)

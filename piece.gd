@@ -5,6 +5,7 @@ class_name Piece
 @export var square_alg: String
 @export var is_selected: bool = false
 @export var colour: String
+@export var has_moved: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
