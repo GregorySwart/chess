@@ -147,28 +147,28 @@ func check_castling(piece: Piece, destination_alg: String) -> void:
 	if piece.type == "White King" and destination_alg == "g1":
 		var rook: Piece = board_dict["h1"]
 		rook.position = Utils.alg_to_pixel_coords("f1")
-		rook.square_alg = destination_alg
+		rook.square_alg = "f1"
 		rook.has_moved = true
 		board_dict.erase("h1")
 		board_dict["f1"] = rook
 	elif piece.type == "White King" and destination_alg == "c1":
 		var rook: Piece = board_dict["a1"]
 		rook.position = Utils.alg_to_pixel_coords("d1")
-		rook.square_alg = destination_alg
+		rook.square_alg = "d1"
 		rook.has_moved = true
 		board_dict.erase("a1")
 		board_dict["d1"] = rook
 	elif piece.type == "Black King" and destination_alg == "g8":
 		var rook: Piece = board_dict["h8"]
 		rook.position = Utils.alg_to_pixel_coords("f8")
-		rook.square_alg = destination_alg
+		rook.square_alg = "f8"
 		rook.has_moved = true
 		board_dict.erase("h8")
 		board_dict["f8"] = rook
 	elif piece.type == "Black King" and destination_alg == "c8":
 		var rook: Piece = board_dict["a8"]
 		rook.position = Utils.alg_to_pixel_coords("d8")
-		rook.square_alg = destination_alg
+		rook.square_alg = "d8"
 		rook.has_moved = true
 		board_dict.erase("a8")
 		board_dict["d8"] = rook
@@ -195,6 +195,7 @@ func capture_piece(attacker: Piece, defender: Piece) -> void:
 	board_dict.erase(start_position)
 	board_dict[destination_alg] = attacker
 	turn = Utils.update_turn(turn)
+	deselect_piece(attacker)
 	defender.queue_free()
 	$"Piece Captured".play()
 
