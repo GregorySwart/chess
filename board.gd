@@ -203,6 +203,20 @@ func capture_piece(attacker: Piece, defender: Piece) -> void:
 	defender.queue_free()
 	$"Piece Captured".play()
 
+func capture_en_passant(attacker: Piece, defender: Piece, destination_alg: String) -> void:
+	var start_position: String = attacker.square_alg
+	attacker.position = Utils.alg_to_pixel_coords(destination_alg)
+	attacker.square_alg = destination_alg
+	board_dict.erase(start_position)
+	board_dict[destination_alg] = attacker
+	last_move_dict = {"piece": attacker, "origin": start_position, "destination": destination_alg}
+
+	turn = Utils.update_turn(turn)
+	deselect_piece(attacker)
+	board_dict.erase(defender.square_alg)
+	defender.queue_free()
+	$"Piece Captured".play()
+
 func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	## Board is clicked
 	if event.is_action_pressed("left_click"):
@@ -224,12 +238,43 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			pass
 		
 		elif not clicked_piece and previously_selected_piece:
-			# A piece is already selected and the user clicks on an empty square -> Move or deselect
+			# A piece is already selected and the user clicks on an empty square -> Move or deselect or en passant
 			
 			var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict, last_move_dict)
 			if alg in potential_moves:
-				# TODO Check en passant logic here!
-				move_piece(previously_selected_piece, alg)
+				# Check en passant conditions:
+
+				var last_move_piece: Piece = last_move_dict["piece"]
+				if last_move_piece:
+
+					# 1. Last move was made by a piece of an opposing colour to the previously selected piece
+					var ep_opp_colour: bool = previously_selected_piece.colour != last_move_piece.colour
+
+					# 1. Last move was a double move
+					var last_move_origin_rank: int = Utils.alg_to_board_coords(last_move_dict["origin"])[1]
+					var last_move_dest_rank: int = Utils.alg_to_board_coords(last_move_dict["destination"])[1]
+					var ep_double_move: bool = abs(last_move_origin_rank - last_move_dest_rank) == 2
+
+					# 2. The previously selected piece is a pawn
+					var ep_last_moved_pawn: bool = last_move_piece.type in ["White Pawn", "Black Pawn"]
+
+					# 3. The previously selected piece is on the same rank as the piece that made the last move
+					var last_move_piece_rank: int = Utils.alg_to_board_coords(last_move_piece.square_alg)[1]
+					var selected_piece_rank: int = Utils.alg_to_board_coords(previously_selected_piece.square_alg)[1]
+					var ep_same_rank: bool = last_move_piece_rank == selected_piece_rank
+
+					# 4. The previously selected piece is on the a file adjacent to the piece that made the last move
+					var last_move_piece_file: int = Utils.alg_to_board_coords(last_move_piece.square_alg)[0]
+					var selected_piece_file: int = Utils.alg_to_board_coords(previously_selected_piece.square_alg)[0]
+					var ep_adjacent_file: bool = abs(last_move_piece_file - selected_piece_file) == 1
+
+					if ep_opp_colour and ep_last_moved_pawn and ep_same_rank and ep_adjacent_file and ep_double_move:
+						capture_en_passant(previously_selected_piece, last_move_piece, alg)
+					else:
+						move_piece(previously_selected_piece, alg)
+				else:
+					move_piece(previously_selected_piece, alg)
+
 			deselect_piece(previously_selected_piece)
 		
 		elif clicked_piece and not previously_selected_piece:

@@ -62,9 +62,12 @@ func get_moves(board_dict: Dictionary[String, Piece], last_move: Dictionary[Stri
 		var destination_matches: bool = Utils.alg_to_board_coords(last_move["destination"])[1] == current_square[1]
 		# 3. Last move origin is the pawn base rank (i.e. last move was a pawn double-move)
 		var origin_matches: bool = Utils.alg_to_board_coords(last_move["origin"])[1] == 7
+		# 4. The current piece is on the 5th rank
+		var on_fifth_rank: bool = current_square[1] == 5
 		
-		if piece_matches and destination_matches and origin_matches:
-			var target_square: Vector2i = Vector2i(current_square.x + 1, current_square.y + 1)
+		if piece_matches and destination_matches and origin_matches and on_fifth_rank:
+			var last_move_piece_file: int = Utils.alg_to_board_coords(last_move_piece.square_alg)[0]
+			var target_square: Vector2i = Vector2i(last_move_piece_file, current_square.y + 1)
 			var target_square_alg: String = Utils.board_coords_to_alg(target_square)
 			potential_moves.append(target_square_alg)
 	
