@@ -12,7 +12,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	super(delta)
 
-func get_moves(board_dict: Dictionary[String, Piece]) -> Array[String]:
+func get_moves(board_dict: Dictionary[String, Piece], last_move: Dictionary[String, Variant]) -> Array[String]:
 	var potential_moves: Array[String] = []
 	
 	var current_square: Vector2i = Utils.alg_to_board_coords(square_alg)
@@ -52,5 +52,20 @@ func get_moves(board_dict: Dictionary[String, Piece]) -> Array[String]:
 			var target_piece: Piece = board_dict[target_square_alg]
 			if target_piece.colour != colour:
 				potential_moves.append(target_square_alg)
+	
+	# Check en passant conditions
+	var last_move_piece: Piece = last_move["piece"]
+	if last_move_piece:  # TODO Find a more elegant way of checking if this is not the first move
+		# 1. Last move was made by an opposite-colour pawn
+		var piece_matches: bool = last_move_piece.type == "Black Pawn"
+		# 2. Last move destination is horizontally adjacent to current square
+		var destination_matches: bool = Utils.alg_to_board_coords(last_move["destination"])[1] == current_square[1]
+		# 3. Last move origin is the pawn base rank (i.e. last move was a pawn double-move)
+		var origin_matches: bool = Utils.alg_to_board_coords(last_move["origin"])[1] == 7
+		
+		if piece_matches and destination_matches and origin_matches:
+			var target_square: Vector2i = Vector2i(current_square.x + 1, current_square.y + 1)
+			var target_square_alg: String = Utils.board_coords_to_alg(target_square)
+			potential_moves.append(target_square_alg)
 	
 	return potential_moves

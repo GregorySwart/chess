@@ -31,6 +31,7 @@ const BLACK_KING_SQUARES = ["e8"]
 @export var board_dict: Dictionary[String, Piece] = {}
 @export var move_indicators: Array[MoveIndicator] = []  # NOTE Move indicators are bugged - disabled for now
 @export var turn: String  # Whose turn is it?
+@export var last_move_dict: Dictionary[String, Variant] = {"piece": null, "origin": null, "destination": null}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -86,7 +87,7 @@ func _process(_delta: float) -> void:
 			print("Selected piece: %s (%s)" % [currently_selected_piece.type, currently_selected_piece])
 			print("Piece.square_alg: %s" % currently_selected_piece.square_alg)
 			print("Piece.position: %s" % currently_selected_piece.position)
-			print("Potential moves: %s" % str(currently_selected_piece.get_moves(board_dict)))
+			print("Potential moves: %s" % str(currently_selected_piece.get_moves(board_dict, last_move_dict)))
 			
 		else:
 			print("No piece selected")
@@ -100,7 +101,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_pressed("m"):
 		var currently_selected_piece: Piece = get_selected_piece()
 		if currently_selected_piece:
-			print("Potential moves: %s" % str(currently_selected_piece.get_moves(board_dict)))
+			print("Potential moves: %s" % str(currently_selected_piece.get_moves(board_dict, last_move_dict)))
 			
 	if Input.is_action_pressed("b"):
 		print("Total pieces in board_dict: %d" % len(board_dict))
@@ -181,6 +182,7 @@ func move_piece(piece: Piece, destination_alg: String) -> void:
 	piece.has_moved = true
 	board_dict.erase(start_position)
 	board_dict[destination_alg] = piece
+	last_move_dict = {"piece": piece, "origin": start_position, "destination": destination_alg}
 
 	check_castling(piece, destination_alg)
 
@@ -194,6 +196,8 @@ func capture_piece(attacker: Piece, defender: Piece) -> void:
 	attacker.square_alg = destination_alg
 	board_dict.erase(start_position)
 	board_dict[destination_alg] = attacker
+	last_move_dict = {"piece": attacker, "origin": start_position, "destination": destination_alg}
+
 	turn = Utils.update_turn(turn)
 	deselect_piece(attacker)
 	defender.queue_free()
@@ -222,8 +226,9 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 		elif not clicked_piece and previously_selected_piece:
 			# A piece is already selected and the user clicks on an empty square -> Move or deselect
 			
-			var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
+			var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict, last_move_dict)
 			if alg in potential_moves:
+				# TODO Check en passant logic here!
 				move_piece(previously_selected_piece, alg)
 			deselect_piece(previously_selected_piece)
 		
@@ -235,7 +240,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 			
 			select_piece(clicked_piece)
 			
-			var potential_moves: Array[String] = clicked_piece.get_moves(board_dict)
+			var potential_moves: Array[String] = clicked_piece.get_moves(board_dict, last_move_dict)
 			for potential_move in potential_moves:
 				# TODO Fix the below move indicator logic - bugs out for some reason
 
@@ -263,7 +268,7 @@ func _on_board_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 				return
 			
 			if clicked_piece.colour != turn:
-				var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict)
+				var potential_moves: Array[String] = previously_selected_piece.get_moves(board_dict, last_move_dict)
 				if clicked_piece.square_alg in potential_moves:
 					capture_piece(previously_selected_piece, clicked_piece)
 				else:
